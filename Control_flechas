@@ -1,0 +1,55 @@
+import qi
+import sys
+import tty
+import termios
+import time
+
+def move_forward():
+    motion_service.moveToward(MAX_VELOCITY, 0, 0)
+
+def move_backward():
+    motion_service.moveToward(-MAX_VELOCITY, 0, 0)
+
+def move_left():
+    motion_service.moveToward(0, MAX_VELOCITY, 0)
+
+def move_right():
+    motion_service.moveToward(0, -MAX_VELOCITY, 0)
+def stop_moving():
+    motion_service.stopMove()
+
+def read_keyboard_input():
+    tty.setraw(sys.stdin.fileno())
+    input_key = sys.stdin.read(1)
+    
+    if input_key == "w":
+        move_forward()
+    elif input_key == "s":
+        move_backward()
+    elif input_key == "a":
+        move_left()
+    elif input_key == "d":
+        move_right()
+    elif input_key == "q":
+        stop_moving()
+        behavior_service.runBehavior("animations/Stand/Gestures/Enthusiastic_5")
+        time.sleep(1)
+        sys.exit()
+
+session = qi.Session()
+session.connect("tcp://PEPPER_IP:9559")
+
+motion_service = session.service("ALMotion")
+behavior_service = session.service("ALBehaviorManager")
+
+MAX_VELOCITY = 0.5  
+MIN_VELOCITY = 0.1  
+MAX_ANGLE = 0.5  
+MIN_ANGLE = 0.1  
+while True:
+    read_keyboard_input()
+
+
+
+
+
