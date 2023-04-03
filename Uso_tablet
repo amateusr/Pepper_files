@@ -1,0 +1,27 @@
+import qi
+import time
+
+
+#Concetar a Pepper
+session = qi.Session()
+session.connect("tcp://102.168.0.103:9559")
+
+speech_service = session.service("ALTextToSpeech") #HAble sin movimiento
+animated_speech_service = session.service("ALAnimatedSpeech") #Hable con movimiento
+motion_service = session.service("ALMotion") 
+behavior_service = session.service("ALBehaviorManager")
+tablet_service = session.service("ALTabletService") #Usar la tablet
+
+
+speech_service.say("Me conecte en un archivo de python")
+animated_speech_service.say("\\vct=100\\ Hola, soy Pepper! \\pau=500\\ Estoy muy contento de conocerte. \\pau=500\\ ¿Cómo estás hoy? \\vct=150\\", _async=True)
+tablet_service.showWebview("http://www.google.com")
+
+result = tablet_service.showInputTextDialog("COmo te llamas?", "Pon tu nombre aqui")
+if result and len(result) > 0:
+    name = result
+else:
+    name = "Unknown"
+print("Hello, " + name + "!")
+
+animated_speech_service.say("Hola"+name)
