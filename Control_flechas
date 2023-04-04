@@ -37,7 +37,7 @@ def read_keyboard_input():
         sys.exit()
 
 session = qi.Session()
-session.connect("tcp://PEPPER_IP:9559")
+session.connect("tcp://192.168.0.103:9559")
 
 motion_service = session.service("ALMotion")
 behavior_service = session.service("ALBehaviorManager")
