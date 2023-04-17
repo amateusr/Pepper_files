@@ -1,0 +1,98 @@
+#backend
+
+import qi
+import time
+import naoqi
+from googlesearch import search
+
+print("Ingrese la IP de Pepper")
+ip = input()
+port = 9559
+session = naoqi.Session("tcp://" + ip + ":" + str(port))
+
+speech_service = session.service("ALTextToSpeech") 
+animated_speech_service = session.service("ALAnimatedSpeech") 
+motion_service = session.service("ALMotion") 
+behavior_service = session.service("ALBehaviorManager")
+tablet_service = session.service("ALTabletService") 
+audio_service = session.service("ALAudioDevice")
+system_service = session.service("ALSystem")
+camara_service = session.service("ALVideoDevice")
+
+a=0
+
+while ==0:
+    print("Menu\n 1.Speech\n2.Ask\n3.Move\n4.Camera\n5.Settings\n6.Exit")
+    menu=input()
+    
+    if menu == 1:
+        print("\nPor favor ingrese el texto que quiere que Pepper diga")
+        texto=input()
+        animated_speech_service(texto)
+    
+    elif menu == 2:
+        pregunta = input("")
+        respuesta = None
+        for resultado in search(pregunta, num_results=1):
+            respuesta = resultado
+            break
+        if respuesta:
+            tts.say("Según Google, " + respuesta)
+        else:
+            tts.say("Lo siento, no pude encontrar una respuesta para eso.")
+    
+    elif menu == 3:
+        print("aqui deberia aparecer lo del perro teclado ese")
+    
+    elif menu == 4:
+        resolucion = 2 
+        color = 11  
+        fps = 30
+        id_camara = cam.subscribe("python_cam", resolucion, color, fps)
+        fotograma = cam.getImageRemote(id_camara)
+        ancho, alto, canales = fotograma[0], fotograma[1], fotograma[2]
+        imagen_opencv = cv2.cvtColor(np.array(fotograma[6], dtype=np.uint8).reshape([alto, ancho, canales]), cv2.COLOR_RGB2BGR)
+        cv2.imshow("Imagen de Pepper", imagen_opencv)
+        cv2.waitKey(0)
+        cam.unsubscribe(id_camara)
+        cv2.destroyAllWindows()
+    
+    elif menu == 5:
+        print("\nSettings\n1.Idioma\n2.Volumen\n3.Reboot\n4.Power off")
+        menu_settings=input()
+        if menu_settings == 1:
+            print("\nLanguage\n1.Español\n2.English\n3.Cancel")
+            menu_language=input()
+            if menu_language==1:
+                animated_speech_service.setLanguage("Spanish")
+            elif menu_language==2:
+                animated_speech_service.setLanguage("English")
+            elif menu_language==3: 
+                pass
+            else
+                print("\nOpcion no valida")
+        elif menu_settings == 2:
+            volumen_actual = audio_service.getOutputVolume()
+            print("\nEl volumen actual es"+ volumen_actual + "Para aumentarlo presione 1, para disminuirlo presione 2, para salir presione 3")
+            while menu_volumen == 1:
+                menu_volumen=input():
+                if menu_volumen==1:
+                    audio_service.setOutputVolume(volumen_actual + 10)
+                elif menu_volumen==2:
+                    audio_service.setOutputVolume(volumen_actual - 10)
+                elif menu_volumen==3:
+                    menu_volumen==2
+        elif menu_settings == 3:
+            print("Seguro desea reiniciar (S) Si (N) No")
+            menu_reboot=input()
+            if menu_reboot==1:
+                system_service.reboot()
+            elif menu_reboot==2:
+                pass
+        elif menu_settings == 4:
+            print("Seguro desea reiniciar (S) Si (N) No")
+            menu_power=input()
+            if menu_power==1:
+                system_service.shutdown()
+            elif menu_power==2:
+                pass
