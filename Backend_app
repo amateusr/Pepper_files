@@ -21,7 +21,7 @@ camara_service = session.service("ALVideoDevice")
 
 a=0
 
-while ==0:
+while a == 0:
     print("Menu\n 1.Speech\n2.Ask\n3.Move\n4.Camera\n5.Settings\n6.Exit")
     menu=input()
     
@@ -65,12 +65,13 @@ while ==0:
             menu_language=input()
             if menu_language==1:
                 animated_speech_service.setLanguage("Spanish")
+                pass
             elif menu_language==2:
                 animated_speech_service.setLanguage("English")
-            elif menu_language==3: 
                 pass
-            else
+            else:
                 print("\nOpcion no valida")
+                pass
         elif menu_settings == 2:
             volumen_actual = audio_service.getOutputVolume()
             print("\nEl volumen actual es"+ volumen_actual + "Para aumentarlo presione 1, para disminuirlo presione 2, para salir presione 3")
